@@ -1,183 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+# Math Quiz Game
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math Quiz Game</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background-color: #282c34;
-            color: #abb2bf;
-        }
+## Description
 
-        h1 {
-            color: #61dafb;
-        }
+This is a Python math quiz game that challenges the player with basic mathematical operations. The project consists of two main files:
 
-        h2 {
-            color: #c678dd;
-        }
+- **game.py**: Contains the main logic of the game, including the functions main and play.
+- **calculate.py**: Located in the models folder, it defines the Calculate class, responsible for generating random mathematical operations based on a chosen difficulty.
 
-        p {
-            color: #abb2bf;
-        }
+## Calculate Class
 
-        code {
-            background-color: #3e4451;
-            padding: 5px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            color: #abb2bf;
-        }
+The Calculate class has the following attributes:
 
-        pre {
-            background-color: #2b2d3a;
-            padding: 10px;
-            border-radius: 6px;
-            overflow: auto;
-        }
+- **difficulty**: Difficulty level chosen by the player (1 to 4).
+- **value1** and **value2**: Numbers randomly generated for the operations.
+- **operation**: Integer representing the operation to be performed (1 = add, 2 = subtract, 3 = multiply).
+- **result**: Result of the generated operation.
 
-        footer {
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px solid #444c56;
-            text-align: center;
-            color: #abb2bf;
-        }
-    </style>
-</head>
+### Methods
 
-<body>
+- `show_operation()`: Displays the generated operation.
+- `check_result(response: int) -> bool`: Checks if the user's response is correct.
 
-    <h1>Math Quiz Game</h1>
+# game.py
 
-    <h2>Description</h2>
-    <p>This is a Python math quiz game that challenges the player with basic mathematical operations. The project consists of two main files:</p>
+The `game.py` file controls the execution of the game, interacting with the player and managing the accumulated points.
 
-    <ul>
-        <li><code>game.py</code>: Contains the main logic of the game, including the functions <code>main</code> and <code>play</code>.</li>
-        <li><code>calculate.py</code>: Located in the models folder, it defines the <code>Calculate</code> class, responsible for generating random mathematical operations based on a chosen difficulty.</li>
-    </ul>
+### How to Run
 
-    <h2>Calculate Class</h2>
-    <p>The <code>Calculate</code> class has the following attributes:</p>
+```bash
+python game.py
+```
+## Features
 
-    <ul>
-        <li><code>difficulty</code>: Difficulty level chosen by the player (1 to 4).</li>
-        <li><code>value1</code> and <code>value2</code>: Numbers randomly generated for the operations.</li>
-        <li><code>operation</code>: Integer representing the operation to be performed (1 = add, 2 = subtract, 3 = multiply).</li>
-        <li><code>result</code>: Result of the generated operation.</li>
-    </ul>
+- 'main()': Main function that starts the game.
+- 'play(points: int) -> None': Function that implements the game logic, allowing the player to perform mathematical operations.
 
-    <h2>Methods</h2>
 
-    <pre>
-        <code>show_operation():</code> Displays the generated operation.
-        <code>check_result(response: int) -> bool:</code> Checks if the user's response is correct.
-    </pre>
+# Example Usage
+```bash
 
-    <h2>game.py</h2>
-    <p>The <code>game.py</code> file controls the execution of the game, interacting with the player and managing the accumulated points.</p>
+from models.calculate import Calculate
+        
+        def main() -> None:
+            points: int = 0
+            play(points)
 
-    <h3>How to Run</h3>
+        def play(points: int) -> None:
+            difficulty: int = int(input('Enter the desired difficulty level [1, 2, 3, or 4]: '))
 
-    <pre>
-        <code>python game.py</code>
-    </pre>
+            calc: Calculate = Calculate(difficulty)
 
-    <h3>Features</h3>
+            print('Enter the result for the following operation: ')
+            calc.show_operation()
 
-    <pre>
-        <code>main():</code> Main function that starts the game.
-        <code>play(points: int) -> None:</code> Function that implements the game logic, allowing the player to perform mathematical operations.
-    </pre>
+            result: int = int(input())
 
-    <h3>Example Usage</h3>
+            if calc.check_result(result):
+                points += 1
+                print(f'You have {points} point(s).')
 
-    <pre>
-        <code>from models.calculate import Calculate</code>
+            continue_game: int = int(input('Do you want to continue playing? [1 - yes, 0 - no] '))
 
-        <code>def main() -> None:</code>
-        <code>    points: int = 0</code>
-        <code>    play(points)</code>
+            if continue_game:
+                play(points)
+            else:
+                print(f'You finished with {points} point(s).')
+                print('Until next time!')
 
-        <code>def play(points: int) -> None:</code>
-        <code>    difficulty: int = int(input('Enter the desired difficulty level [1, 2, 3, or 4]: '))</code>
+        if __name__ == '__main__':
+            main()
+```
+# calculate.py
+The  'calculate.py' file defines the Calculate class, which encapsulates the logic to generate and verify mathematical operations.
 
-        <code>    calc: Calculate = Calculate(difficulty)</code>
+## Usage
+```bash
+        from models.calculate import Calculate
 
-        <code>    print('Enter the result for the following operation: ')</code>
-        <code>    calc.show_operation()</code>
+        # Create an instance of the Calculate class with the desired difficulty
+        calc = Calculate(difficulty=2)
 
-        <code>    result: int = int(input())</code>
+        # Display the generated operation
+        calc.show_operation()
 
-        <code>    if calc.check_result(result):</code>
-        <code>        points += 1</code>
-        <code>        print(f'You have {points} point(s).')</code>
+        # Wait for the user's response
+        response = int(input('Your response: '))
 
-        <code>    continue_game: int = int(input('Do you want to continue playing? [1 - yes, 0 - no] '))</code>
+        # Check if the response is correct
+        if calc.check_result(response):
+            print('Correct answer!')
+        else:
+            print('Wrong answer.')
+```   
+# Calculate Class
+The 'Calculate' class generates random mathematical operations based on a chosen difficulty.
 
-        <code>    if continue_game:</code>
-        <code>        play(points)</code>
-        <code>    else:</code>
-        <code>        print(f'You finished with {points} point(s).')</code>
-        <code>        print('Until next time!')</code>
+## Properties
 
-        <code>if __name__ == '__main__':</code>
-        <code>    main()</code>
-    </pre>
+- difficulty: Integer representing the difficulty level (1 to 4).
+- value1 and value2: Randomly generated integers.
+- operation: Represents the operation to be performed (1 = add, 2 = subtract, 3 = multiply).
+- result: Result of the generated operation.
 
-    <h2>calculate.py</h2>
-    <p>The <code>calculate.py</code> file defines the <code>Calculate</code> class, which encapsulates the logic to generate and verify mathematical operations.</p>
-
-    <h3>Usage</h3>
-
-    <pre>
-        <code>from models.calculate import Calculate</code>
-
-        <code># Create an instance of the Calculate class with the desired difficulty</code>
-        <code>calc = Calculate(difficulty=2)</code>
-
-        <code># Display the generated operation</code>
-        <code>calc.show_operation()</code>
-
-        <code># Wait for the user's response</code>
-        <code>response = int(input('Your response: '))</code>
-
-        <code># Check if the response is correct</code>
-        <code>if calc.check_result(response):</code>
-        <code>    print('Correct answer!')</code>
-        <code>else:</code>
-        <code>    print('Wrong answer.')</code>
-    </pre>
-
-    <h3>Calculate Class</h3>
-    <p>The <code>Calculate</code> class generates random mathematical operations based on a chosen difficulty.</p>
-
-    <h4>Properties</h4>
-
-    <ul>
-        <li><code>difficulty:</code> Integer representing the difficulty level (1 to 4).</li>
-        <li><code>value1</code> and <code>value2:</code> Randomly generated integers.</li>
-        <li><code>operation:</code> Represents the operation to be performed (1 = add, 2 = subtract, 3 = multiply).</li>
-        <li><code>result:</code> Result of the generated operation.</li>
-    </ul>
-
-    <h4>Methods</h4>
-
-    <pre>
-        <code>show_operation():</code> Displays the generated operation.
-        <code>check_result(response: int) -> bool:</code> Verifies if the user's response is correct.
-    </pre>
-
-    <h2>Contribution</h2>
-    <p>Contributions are welcome! Feel free to open issues or send pull requests.</p>
-
-</body>
-
-</html>
+## Methods
+```bash  
+        show_operation(): Displays the generated operation.
+        check_result(response: int) -> bool: Verifies if the user's response is correct.
+```   
+# Contribution
+Contributions are welcome! Feel free to open issues or send pull requests.
